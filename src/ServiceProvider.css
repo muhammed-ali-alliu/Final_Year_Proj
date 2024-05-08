@@ -1,0 +1,77 @@
+/* Overall page styles */
+body {
+    font-family: "Work Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Set a light background color */
+}
+
+/* Navbar styles */
+.title_dashboard, .calendar-title {
+    margin-left: 20px; /* Adjusted left margin for smaller screens */
+    margin-top: 150px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Dashboard container styles */
+.dashboard-container {
+    width: 90%; /* Adjusted width for responsiveness */
+    max-width: 800px; /* Set a maximum width to limit content width */
+    margin: 20px auto; /* Center the container horizontally with top margin */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.dashboard-details {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Calendar title styles */
+.calendar-title {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Calendar container styles */
+.calendar-container {
+    max-width: 800px; /* Set maximum width for calendar */
+    margin: 20px auto; /* Center the container */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar component styles */
+.react-calendar {
+    width: 100%; /* Make the calendar fill its container */
+    border: none; /* Remove default border */
+    box-shadow: none; /* Remove default box shadow */
+}
+
+.react-calendar__tile--active {
+    background-color: #b5cade; /* Set active date tile background color */
+    color: #333; /* Set active date text color */
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .title_dashboard, .calendar-title {
+        font-size: 20px; /* Adjusted font size for smaller screens */
+    }
+    .dashboard-container, .calendar-container {
+        width: 95%; /* Adjust width for smaller screens */
+    }
+    .dashboard-details {
+        font-size: 14px; /* Adjusted font size for details on smaller screens */
+    }
+}

@@ -1,0 +1,36 @@
+.pg-title{
+    margin-top: 100px;
+    margin-left: 100px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.question_haha p{
+    margin-left: 100px;
+}
+
+.booking_form{
+    margin-left: 450px;
+    margin-top: 50px;
+}
+
+.Time{
+    margin-left: -350px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.TimeSelection{
+    display: flex;
+    flex-direction: column;
+}
+
+.TimeSelection label{
+    margin-right: 10px;
+}
+
+.notes p{
+    margin-left: -350px;
+    font-weight: bold;
+    font-size: 20px;
+}

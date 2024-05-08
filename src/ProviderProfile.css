@@ -1,0 +1,94 @@
+.provider-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #ccc;
+    width: 450px;
+    height: 400px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.provider-container h2{
+    margin-top: 45px;
+}
+
+.page_ttl{
+    margin-left: -50px;
+}
+
+.page_content{
+    margin-top: 150px;
+    margin-left: 300px;
+    font-size: larger;
+}
+
+/* ProviderProfile.css */
+
+/* Define a semi-transparent overlay for the entire page */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 999; /* Ensure it appears above other content */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+/* Style the chat pop-up container */
+.chat-popup {
+    background-color: #fff; /* White background */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    max-width: 400px; /* Adjust the maximum width as needed */
+    width: 90%; /* Take up 90% of the available width */
+    padding: 20px;
+    position: relative; /* Set to relative to allow for centering */
+}
+
+/* Style the chat header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style the close button */
+.close {
+    cursor: pointer;
+}
+
+/* Style the chat messages container */
+.chat-messages {
+    max-height: 300px; /* Limit height to show scrollbars if necessary */
+    overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Style the chat input */
+.chat-input {
+    margin-top: 10px;
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1; /* Take up remaining space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    padding: 8px 20px;
+    background-color: #007bff; /* Blue button */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

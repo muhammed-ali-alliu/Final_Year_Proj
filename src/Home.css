@@ -1,0 +1,95 @@
+.search-app{
+    display: flex;
+    align-items: center;
+    
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+    background-color: #359EFF;
+    border-radius: 10px;
+    height: 600px;
+    color: white;
+    text-align: right;
+}
+
+.search-app-text{
+    text-align: left;
+    margin-left: 50px;
+    margin-top: 200px;
+    font-size: 35px;
+    font-family: "Work Sans", sans-serif;
+}
+
+.search-app input {
+    width: 300px;
+    height: 30px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.services{
+    margin-top: 100px;
+    margin-left: 100px;
+    font-size: larger;
+    font-family: "Work Sans", sans-serif;
+}
+
+.service-list{
+    margin-top: 40px;
+    margin-left: 100px;
+    display: flex;
+    flex-wrap: wrap; /* Ensure items wrap to next line if they exceed container width */
+    font-family: "Work Sans", sans-serif;
+   
+}
+
+.service-list > div {
+    margin-right: 60px; /* Adjust spacing between containers */
+    margin-bottom: 60px; /* Adjust spacing between rows */
+}
+
+.electricians{
+    background-color: #359EFF;
+    color: #fff;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    font-family: "Work Sans", sans-serif;
+    
+}
+
+.how-it-works{
+    margin-left: 100px;
+}
+
+.headers{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 100px;
+    font-family: "Work Sans", sans-serif;
+}
+
+.how-it-works-1{
+    margin-right: 200px;
+    margin-top: 50px;
+    background-color:#fff;
+    border: 1px solid #ccc;
+    height: 200px;
+    width: 200px;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.how-it-works-1 h2{
+    margin-left: 20px;
+}
+
+.how-it-works-1 h4{
+    margin-left: 20px;
+}
+
+.Reviews{
+    font-family: "Work Sans", sans-serif;
+    margin-left: 100px;
+    margin-top: 100px;
+}

@@ -1,0 +1,81 @@
+body{
+    font-family: "Work Sans", sans-serif;
+}
+
+.welcome-messages{
+    margin-left: 200px;
+    margin-top: 150px;
+}
+
+.service-provider{
+    margin-left: 200px;
+    margin-top: 50px;
+}
+
+.input-search{
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px !important;
+}
+
+.input-search input{
+    border-radius: 5px;
+    padding: 10px;
+    width: 1000px;
+}
+
+.popular-services{
+    margin-top: 40px;
+}
+
+.popular-services-containers{
+    margin-top: 40px;   
+    max-width: calc(100% - 540px); 
+}
+
+.popular-services-containers ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.popular-services-containers li {
+    display: flex;
+    margin-left: 15px;
+    margin-top: 20px;
+    background-color:darkblue;
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+    font-family: "Work Sans", sans-serif;
+    cursor: pointer;
+}
+
+
+
+.most-viewed{
+    margin-top: 40px;
+    margin-left: 100px;
+    display: flex;
+    flex-wrap: wrap; /* Ensure items wrap to next line if they exceed container width */
+    font-family: "Work Sans", sans-serif;
+    
+   
+}
+
+.most-viewed > div {
+    margin-right: 60px; 
+    margin-bottom: 60px; 
+}
+
+.electricians{
+    background-color: #359EFF;
+    color: #fff;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    font-family: "Work Sans", sans-serif;
+}
+

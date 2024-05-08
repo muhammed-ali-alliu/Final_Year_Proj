@@ -1,0 +1,33 @@
+
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.5.1
+          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+      - name: Installing dependency
+        run: npm install 
+
+      - name: Installing jest
+        run: npm install --save-dev jest
+
+      # - name: run test
+      #   run: npm test 
