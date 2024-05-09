@@ -1,15 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import Navbar from "./Components/Navbar";
 import Service_ProviderNavbar from './Components/Service-ProviderNavbar';
-import Calendar from 'react-calendar'; // Import the calendar component
-import 'react-calendar/dist/Calendar.css'; // Import calendar styles
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; 
 import './ServiceProvider.css';
 
 function ServiceProvider() {
-    const [date, setDate] = useState(new Date()); // State to manage the selected date
+    const [date, setDate] = useState(new Date());
+    const [serviceCategory, setServiceCategory] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const userEmail = localStorage.getItem('email');
+        const fetchServiceCategory = async () => {
+            try {
+                const response = await Axios.get(`http://localhost:8000/service-providers/${userEmail}`);
+                const serviceProviderData = response.data;
+                console.log(serviceProviderData)
+                setServiceCategory(serviceProviderData.provided_services);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching service category:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchServiceCategory();
+    }, []);
 
     const test = 5;
-    const test2 = 1;
+    const test2 = 0;
+    const firstname = localStorage.getItem("firstname")
+    const lastname = localStorage.getItem("lastname")
 
     return (
         <>
@@ -21,35 +44,29 @@ function ServiceProvider() {
                 </div>
 
                 <div className="dashboard-container">
-    <h2>Dashboard Overview</h2>
-    <div className="dashboard-details">
-        <p>Total Orders Completed: {test}</p>
-        <p>Upcoming Appointments: {test2}</p>
-        
-        <p>Customer Ratings: </p>
-        <p>Service Category: plumber</p>
-        
-        <p>Next Appointment: 2024-04-24</p>
-        
-    </div>
-</div>
-
-
+                    <h2>Dashboard Overview</h2>
+                    <div className="dashboard-details">
+                        <p>Name: {firstname} {lastname}</p>
+                        <p>Customer Ratings: </p>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <p>Service Category: {serviceCategory}</p>
+                        )}
+                        <p>Next Appointment: 2024-04-24</p>
+                    </div>
+                </div>
 
                 <div className="calendar-title">
                     My Calendar
-                    </div>
-
-                <div className="calendar-container">
-
-                   
-                    
-                    <Calendar
-                        onChange={setDate} // Handle date change
-                        value={date} // Set selected date
-                    />
                 </div>
 
+                <div className="calendar-container">
+                    <Calendar
+                        onChange={setDate} 
+                        value={date} 
+                    />
+                </div>
             </div>
         </>
     );

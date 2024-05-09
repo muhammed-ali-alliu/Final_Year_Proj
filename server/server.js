@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer')
 const {saveMessage, getMessages, getCustomerMessages} = require('./models/Messages')
 const { createContactTable, insertContact } = require('./models/Contact');
+const bcrypt = require('bcrypt');
 
 
 const {createCustomerDetailsTable, updateCustomerDetails, getCustomerDetailsByEmail} = require('./models/Customer_Details')
@@ -235,8 +236,11 @@ app.post('/signup', async (req, res) => {
             return res.status(400).json({ error: 'Invalid role.' });
         }
 
+        // Encrypt the password using bcrypt
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         // Create new user if email doesn't exist and role is valid
-        const newUser = await createUser({ firstname, lastname, email, role, password, phonenumber });
+        const newUser = await createUser({ firstname, lastname, email, role, password: hashedPassword, phonenumber });
 
         // Respond with user creation details
         res.status(201).json(newUser);
@@ -251,7 +255,7 @@ app.post('/signup', async (req, res) => {
         console.error('Error creating user:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});
+})
 
 // Function to insert user's email into customer_details table
 async function insertCustomerDetails(email) {
@@ -458,26 +462,40 @@ app.get('/bookings/customer_email/:email', async (req, res) => {
 app.put('/bookings/:id', async (req, res) => {
     const { id } = req.params;
     const { status, declineReason, hoursWorked, email } = req.body;
-
+   
     try {
         let query;
         let values;
-
         if (status === 'Job Accepted') {
-            // Logic for accepting the booking
             query = 'UPDATE bookings SET status = $1 WHERE id = $2';
             values = [status, id];
+            // Send email to customer here
+            const booking = await pool.query('SELECT * FROM bookings WHERE id = $1', [id]);
+            const customerEmail = booking.rows[0].customer_email;
+            
+            // Fetch customer's address from the customer_details table
+            const customerDetails = await pool.query('SELECT * FROM customer_details WHERE email = $1', [customerEmail]);
+            const customerAddress = `${customerDetails.rows[0].street_address}, ${customerDetails.rows[0].city}, ${customerDetails.rows[0].state}, ${customerDetails.rows[0].postal_code}`;
+            
+            // Fetch customer's phone number from the users table
+            const userData = await pool.query('SELECT * FROM users WHERE email = $1', [customerEmail]);
+            const customerPhoneNumber = userData.rows[0].phonenumber;
+
+            await sendEmail(customerEmail, 'Booking Accepted', `Your booking has been accepted. Customer address: ${customerAddress}, Customer phone number: ${customerPhoneNumber}`);
         } else if (status === 'Job Declined') {
-            // Logic for declining the booking
             query = 'UPDATE bookings SET status = $1, decline_reason = $2 WHERE id = $3';
             values = [status, declineReason, id];
+            // Send email to customer here
+            const booking = await pool.query('SELECT * FROM bookings WHERE id = $1', [id]);
+            const customerEmail = booking.rows[0].customer_email;
+            await sendEmail(customerEmail, 'Booking Declined', 'Your booking has been declined.');
         } else if (status === 'Job Completed') {
-            // Logic for completing the job
+            // Calculate service charge and total charge
             const serviceProviderData = await pool.query('SELECT * FROM service_provider WHERE email = $1', [email]);
             const hourlyRate = serviceProviderData.rows[0].hourly_rate;
             const serviceCharge = hourlyRate * hoursWorked;
             const totalCharge = serviceCharge * 1.2; // Assuming a 20% additional charge
-
+            
             // Create Payment Intent with Stripe
             const paymentIntent = await stripe.paymentIntents.create({
                 amount: totalCharge * 100, // Convert totalCharge to cents
@@ -485,23 +503,20 @@ app.put('/bookings/:id', async (req, res) => {
                 description: 'Payment for service', // Description of the payment
                 // Add any additional parameters as needed
             });
+            
+            const paymentLink = `https://checkout.stripe.com/pay/${paymentIntent.client_secret}`;
 
-            // Update booking status and payment details
             query = 'UPDATE bookings SET status = $1, hours_worked = $2, service_charge = $3, total_charge = $4 WHERE id = $5';
             values = [status, hoursWorked, serviceCharge, totalCharge, id];
 
             // Send email to customer with invoice breakdown and payment link
             const booking = await pool.query('SELECT * FROM bookings WHERE id = $1', [id]);
             const customerEmail = booking.rows[0].customer_email;
-
-            // Construct payment link using paymentIntent.id
-            const paymentLink = `http://localhost:5173/checkout?paymentIntentId=${paymentIntent.id}`;
             await sendInvoiceEmail(customerEmail, serviceCharge, totalCharge, paymentLink);
         } else {
             return res.status(400).json({ error: 'Invalid status' });
         }
 
-        // Execute the database query with the prepared query and values
         await pool.query(query, values);
 
         res.status(200).json({ message: 'Booking updated successfully' });
@@ -510,6 +525,7 @@ app.put('/bookings/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 

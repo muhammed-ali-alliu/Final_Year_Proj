@@ -30,28 +30,10 @@ function Signup() {
             console.log("Signup response:", signupResponse.data);
     
             if (signupResponse.data.success) {
-                // Check if the role is service-provider
-                if (formData.role === "service-provider") {
-                    // If role is service-provider, create the service provider profile
-                    const serviceProviderResponse = await axios.post("http://localhost:8000/sp", { email: formData.email });
-                    console.log("Service provider response:", serviceProviderResponse.data);
-    
-                    if (serviceProviderResponse.data.success) {
-                        alert("Service provider profile created successfully");
-                    } else {
-                        alert("Failed to create service provider profile");
-                    }
-                } else {
-                    // If role is customer, create the customer profile
-                    const customerResponse = await axios.post("http://localhost:8000/customer-details", { email: formData.email });
-                    console.log("Customer response:", customerResponse.data);
-    
-                    if (customerResponse.data.success) {
-                        alert("Customer profile created successfully");
-                    } else {
-                        alert("Failed to create customer profile");
-                    }
-                }
+                
+                window.alert("Sign-up successful");    
+                
+                window.location.href = "/login";
             } else {
                 setError(signupResponse.data.error || "An error occurred while creating user profile");
             }
@@ -60,6 +42,7 @@ function Signup() {
             setError("An error occurred while creating user profile");
         }
     };
+    
     
     
 
